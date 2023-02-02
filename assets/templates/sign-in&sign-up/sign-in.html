@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script defer type="text/javascript" src="../../static/JS/sign-in&sign-up/sign-in.js"></script>
+</head>
+
+<body>
+    <div id="form_all">
+        <div id="form_inbox">
+            <div id="form_login">
+                <form method="post">
+                    <input type="email" name="username" id="inputUser" placeholder="이메일을 입력 해주세요">
+
+                    <input type="password" name="password" id="inputPassword" placeholder="비밀번호를 입력 해주세요">
+
+                    <div id="btn_1">
+                        <button type="button" onclick=login_click()>로그인</button>
+
+                        <button onclick="window.location.href='./sign-up.html'" type="button" id="signup_btn">
+                            회원가입
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
