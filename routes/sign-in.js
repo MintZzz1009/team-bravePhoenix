@@ -6,8 +6,6 @@ const { user } = require("../models");
 router.post("/auth", async (req, res) => {
     console.log(req.body);
     const { userEmail, userPassword } = req.body;
-    // const data = JSON.parse(req.body);
-    // console.log(data.userid);
 
     const User = await user.findOne({ where: { userEmail, userPassword } });
 

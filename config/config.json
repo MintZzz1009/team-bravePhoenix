@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "12345678",
+    "password": "brave_phoenix",
     "database": "brave_phoenix",
-    "host": "express-database.cdlyzoinjxjt.ap-northeast-2.rds.amazonaws.com",
+    "host": "express-database3.cdlyzoinjxjt.ap-northeast-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {

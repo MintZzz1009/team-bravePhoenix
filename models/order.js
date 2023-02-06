@@ -7,14 +7,17 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    orderStatus: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0
+      references: {
+        model: 'user',
+        key: 'userId'
+      }
     },
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    orderName: {
+      type: DataTypes.STRING(100),
+      allowNull: true
     },
     orderRecipientName: {
       type: DataTypes.STRING(100),
@@ -32,17 +35,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false
     },
-    userId: {
+    totalPrice: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'user',
-        key: 'userId'
-      }
-    },
-    itemIds: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     orderCreatedAt: {
       type: DataTypes.DATE,

@@ -1,11 +1,13 @@
 var DataTypes = require("sequelize").DataTypes;
 var _item = require("./item");
 var _order = require("./order");
+var _orderDetail = require("./orderDetail");
 var _user = require("./user");
 
 function initModels(sequelize) {
   var item = _item(sequelize, DataTypes);
   var order = _order(sequelize, DataTypes);
+  var orderDetail = _orderDetail(sequelize, DataTypes);
   var user = _user(sequelize, DataTypes);
 
   item.belongsTo(user, { as: "marketer_user", foreignKey: "marketer"});
@@ -16,6 +18,7 @@ function initModels(sequelize) {
   return {
     item,
     order,
+    orderDetail,
     user,
   };
 }
