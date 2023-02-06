@@ -1,5 +1,5 @@
 const express = require("express")
-const {Item , Order , User} = require("../models")
+const {Item , Order , User,Cart} = require("../models")
 //cart를 만들어야 될거같다
 const router = express.Router();
 
@@ -12,7 +12,7 @@ const router = express.Router();
 router.get("/cart/item" , async(req,res)=>{
     const cart = await Cart.findAll({
         where:{
-            orderId,
+            cartId,
         },
     })
     const itemsId = cart.map((c) => itemsId)
@@ -21,13 +21,13 @@ router.get("/cart/item" , async(req,res)=>{
  * 장바구니에 상품 담기.
  * 장바구니에 상품이 이미 담겨있으면 갯수만 수정한다.
  */
-router.put("/cart/item/:itemid", async(req,res)=>{
-    const{itemid} = req.params
+router.put("/cart/item/:itemId", async(req,res)=>{
+    const{itemId} = req.params
     const{quantity} = req.body 
 
     const existsCart = await Cart.findOne({
         where: {
-          itemid,
+          itemId,
           quantity,
         },
       });
@@ -36,7 +36,7 @@ router.put("/cart/item/:itemid", async(req,res)=>{
         await existsCart.save();
       } else {
         await Cart.create({
-          goodsId,
+          itemId,
           quantity,
         });
       }
@@ -46,12 +46,12 @@ router.put("/cart/item/:itemid", async(req,res)=>{
 /**
  * 장바구니 항목 삭제
  */
-router.delete("/car/item/:itemid", async(req,res)=>{
-    const {itemid} = req.params
+router.delete("/car/item/:itemId", async(req,res)=>{
+    const {itemId} = req.params
 
-    const existsCart = await Cart.find({itemid});
+    const existsCart = await Cart.find({itemId});
     if (existsCart.length > 0) {
-        await Cart.deleteOne({ itemid });
+        await Cart.deleteOne({ itemId });
     }
     res.json({result:"success"})
 })

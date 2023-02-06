@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>cart</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <form name="form1" id="form1" method="post" action="${path}/shop/cart/update.do">
+        <table border="1">
+            <tr>
+                <th>상품명</th>
+                <th>단가</th>
+                <th>수량</th>
+                <th>금액</th>
+                <th>취소</th>
+            </tr>
+            <!-- <c:forEach var="row" items="${map.list}" varStatus="i"> -->
+            <tr>
+                <td>
+                    ${row.productName}
+                </td>
+                <td style="width: 80px" align="right">
+                    <fmt:formatNumber pattern="###,###,###" value="${row.productPrice}"/>
+                </td>
+                <td>
+                    <input type="number" style="width: 40px" name="amount" value="${row.amount}" min="1">
+                    <input type="hidden" name="productId" value="${row.productId}">
+                </td>
+                <td style="width: 100px" align="right">
+                    <fmt:formatNumber pattern="###,###,###" value="${row.money}"/>
+                </td>
+                <td>
+                    <a href="${path}/shop/cart/delete.do?cartId=${row.cartId}">삭제</a>
+                </td>
+            </tr>
+            </c:forEach>
+            <tr>
+                <td colspan="5" align="right">
+                    장바구니 금액 합계 : <fmt:formatNumber pattern="###,###,###" value="${map.sumMoney}"/><br>
+                    배송료 : ${map.fee}<br>
+                    전체 주문금액  :<fmt:formatNumber pattern="###,###,###" value="${map.allSum}"/>
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" name="count" value="${map.count}">
+        <button type="submit" id="btnUpdate">수정</button>
+    </form>
+    </c:otherwise>
+</c:choose>
+<button type="button" id="btnList">상품목록</button>
+</body>
+</html>
