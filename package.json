@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/MintZzz1009/team-bravePhoenix#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mysql2": "^3.1.0",
+    "sequelize": "^6.28.0",
+    "sequelize-auto": "^0.8.8"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.0"
   }
 }
