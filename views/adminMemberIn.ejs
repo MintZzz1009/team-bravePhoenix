@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <script>
+      src = "https://code.jquery.com/jquery-3.6.3.js";
+      integrity = "sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=";
+      crossorigin = "anonymous";
+    </script>
+    <style>
+      #wrapper {
+        width: 200px;
+        background-color: #cce1ff;
+        border: none;
+        color: darkcyan;
+        margin: auto;
+        display: block;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <h3>상세조회</h3>
+      <table id="table" class="table" border="1" align="center">
+        <tr>
+          <th>ID</th>
+          <td><%= members.userId %></td>
+        </tr>
+        <tr>
+          <th>계정</th>
+          <td>
+            <input type="text" value="<%= members.adminValid %>" />
+          </td>
+        </tr>
+        <tr>
+          <th>닉네임</th>
+          <td>
+            <input type="text" value="<%= members.userNickname %>" />
+          </td>
+        </tr>
+        <tr>
+          <th>비밀번호</th>
+          <td>
+            <input type="text" value="<%= members.userPassword %>" />
+          </td>
+        </tr>
+        <tr>
+          <th>핸드폰</th>
+          <td>
+            <input type="text" value="<%= members.userPhoneNumber %>" />
+          </td>
+        </tr>
+        <tr>
+          <th>이메일</th>
+          <td>
+            <input type="text" value="<%= members.userEmail %>" />
+          </td>
+        </tr>
+        <tr>
+          <th>계정 생성일</th>
+          <td><%= members.userCreatedAt %></td>
+        </tr>
+      </table>
+    </div>
+    <button id="wrapper">수정완료</button>
+  </body>
+</html>

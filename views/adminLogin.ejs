@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <script>
+      src = "https://code.jquery.com/jquery-3.6.3.js";
+      integrity = "sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=";
+      crossorigin = "anonymous";
+    </script>
+    <style>
+      #sform {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body id="sform">
+    <div>
+      <form action="api/admin/login" method="POST">
+        <table>
+          <h3>로그인</h3>
+          <tr>
+            <td>ID :</td>
+            <td><input type="text" name="userEmail" /></td>
+          </tr>
+          <tr>
+            <td>Password :</td>
+            <td><input type="text" name="password" autocomplete="on" /></td>
+          </tr>
+          <tr>
+            <td><button id="loginBtn" type="button" onc>로그인</button></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <script>
+      // const adminAccount = $($(this).find("input[type=hidden]")[2]).val();
+      const loginBtn = document.querySelector("#loginBtn");
+      loginBtn.addEventListener("click", testApi);
+      function testApi() {
+        $.ajax({
+          url: "/api/admin/login",
+          type: "GET",
+          data: "json",
+          success: function (response) {
+            console.log(response.message);
+          },
+          error: function (response) {
+            console.error(error);
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
