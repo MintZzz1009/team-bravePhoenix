@@ -27,7 +27,7 @@ function login_click() {
         success: function (response) {
             alert("로그인 성공")
             localStorage.setItem("token", response.token);
-            window.location.replace("");
+            window.location.replace("../main.html");
         },
         error: function (error) {
             console.log(error)
