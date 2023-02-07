@@ -1,4 +1,4 @@
-
+    
 
 $(document).ready(function(){
 
@@ -18,13 +18,13 @@ $(document).ready(function(){
             for(let i = 0; i < rows.length; i++){
                 tempHtml += `<tr onclick = "printAnOrder(${rows[i].orderId})">
                                 <td id="orderId">
-                                    ${rows[i].orderId}
+                                    ${rows[i].orderId} &nbsp;
                                 </td>
                                 <td>
-                                    ${rows[i].orderName}
+                                    ${rows[i].orderName} &nbsp;
                                 </td>
                                 <td>
-                                    진행 중
+                                    진행 중 &nbsp;
                                 </td>
                                 <td>
                                     ${rows[i].orderCreatedAt}
@@ -40,10 +40,8 @@ $(document).ready(function(){
 function printAnOrder(orderId){
     const statusList = ["상품 확인중", "상품 준비중", "배송중", "배송완료"];
         // e.preventDefault();
-    $('#testModal').modal("show");
+    $('#modal').modal("show");   
     
-    $('#modalText').append("되나??");
-
     $.ajax({
         type: "GET",
         url: "/api/myPage/user/order/" + orderId,
@@ -53,7 +51,7 @@ function printAnOrder(orderId){
             let tempHtml = `<table>
                             <tr>
                                 <td>
-                                    주문번호
+                                    주문번호 &nbsp;
                                 </td>
                                 <td>
                                     ${row.orderId}
@@ -61,7 +59,7 @@ function printAnOrder(orderId){
                             </tr>
                             <tr>
                                 <td>
-                                    주문일자
+                                    주문일자 &nbsp;
                                 </td>
                                 <td>
                                     ${row.orderCreatedAt}
@@ -69,15 +67,15 @@ function printAnOrder(orderId){
                             </tr>
                             <tr>
                                 <td>
-                                    수령인 주소
+                                    수령인 주소 &nbsp;
                                 </td>
                                 <td>
                                     ${row.orderAddress}
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    수령인 전화번호
+                                <td> 
+                                    수령인 전화번호 &nbsp;
                                 </td>
                                 <td>
                                     ${row.orderPhoneNumber}
@@ -85,7 +83,7 @@ function printAnOrder(orderId){
                             </tr>
                             <tr>
                                 <td>
-                                    수령인 성함
+                                    수령인 성함 &nbsp;
                                 </td>
                                 <td>
                                     ${row.orderRecipientName}
@@ -93,7 +91,7 @@ function printAnOrder(orderId){
                             </tr>
                             <tr>
                                 <td>
-                                    주문 요구사항
+                                    주문 요구사항 &nbsp;
                                 </td>
                                 <td>
                                     ${row.orderRequests}
@@ -101,7 +99,7 @@ function printAnOrder(orderId){
                             </tr>
                             <tr>
                                 <td>
-                                    결제금액
+                                    결제금액 &nbsp;
                                 </td>
                                 <td>
                                     ${row.totalPrice}
@@ -135,16 +133,16 @@ function printAnOrder(orderId){
                 tempHtml += `
                     <tr>
                         <td>
-                            <img src="${row.orderItems[i].itemImg}"
+                            <img src="${row.orderItems[i].itemImg}"> &nbsp;
                         </td>
                         <td>
-                            ${row.orderItems[i].itemName}
+                            ${row.orderItems[i].itemName} &nbsp;
                         </td>
                         <td>
-                            ${row.orderItems[i].itemPrice}
+                            ${row.orderItems[i].itemPrice} &nbsp;
                         </td>
                         <td>
-                            ${row.orderItems[i].itemQuantity}
+                            ${row.orderItems[i].itemQuantity} &nbsp;
                         </td>
                         <td>
                             ${statusList[row.orderItems[i].itemStatus]}

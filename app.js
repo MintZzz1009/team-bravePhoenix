@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 
 const router = require("./routes");
 const { user: User } = require("./models/index");
-const userMiddleware = require('./middlewares/user-middleware');
+const userMiddleware = require('./middlewares/user-middlewares');
 
 const app = express();
 app.set('port', process.env.PORT || 3004);
@@ -12,6 +12,12 @@ app.set('port', process.env.PORT || 3004);
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/views')); //정적파일, 이미지파일
+
+
+app.use("/api/myPage", express.static(__dirname + '/views'));
+app.use("/api/myPage/user", express.static(__dirname + '/views'));
+app.use("/api/myPage/owner", express.static(__dirname + '/views'));
+
 
 // app.set('views', __dirname + '/views/myPage');
 // app.use("/static", express.static(__dirname + '/views/myPage'))

@@ -4,7 +4,7 @@ class MyPageRenderer{
 
     getMyPage = async (req, res, next) => {
         // const adminValid = res.locals.a.adminValid;
-        const adminValid = 0;
+        const adminValid = 1;
         
         if (adminValid == 0){
             return res.status(200).render("myPageIndex.ejs", {admin: 0, list: 0});
@@ -18,7 +18,7 @@ class MyPageRenderer{
 
     getMyPageUserMainProgress = async (req, res, next) => {
         // const adminValid = res.locals.a.adminValid;
-        const adminValid = 0;
+        const adminValid = 1;
         if(adminValid == 0){
             return res.status(200).render("myPageIndex.ejs", {admin: 0, list: 1});
         }else{
@@ -28,7 +28,7 @@ class MyPageRenderer{
     
     getMyPageOwnerMainProgress = async (req, res, next) => {
         // const adminValid = res.locals.a.adminValid;
-        const adminValid = 0;
+        const adminValid = 1;
         if(adminValid == 1){
             return res.status(200).render("myPageIndex.ejs", {admin: 1, list: 1});
         }else{
@@ -38,7 +38,7 @@ class MyPageRenderer{
 
     getMyPageUserCart = async (req, res, next) => {
         // const adminValid = res.locals.a.adminValid;
-        const adminValid = 0;
+        const adminValid = 1;
 
         if(adminValid == 0){
             return res.status(200).render("myPageIndex.ejs", {admin: 0, list: 2});

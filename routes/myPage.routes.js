@@ -3,6 +3,7 @@ const router = express.Router();
 
 const MyPageController = require("../controllers/myPage.controller");
 const MyPageRenderer = require("../renderers/myPageRenderer");
+const authMiddleWare = require("../middlewares/user-middlewares");
 
 
 const myPageController = new MyPageController();
