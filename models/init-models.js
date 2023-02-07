@@ -1,18 +1,12 @@
 var DataTypes = require("sequelize").DataTypes;
-<<<<<<< HEAD
-=======
 var _cart = require("./cart");
->>>>>>> 1cebcc3b09466c70bc7111549204fff2fce97196
 var _item = require("./item");
 var _order = require("./order");
 var _orderDetail = require("./orderDetail");
 var _user = require("./user");
 
 function initModels(sequelize) {
-<<<<<<< HEAD
-=======
   var cart = _cart(sequelize, DataTypes);
->>>>>>> 1cebcc3b09466c70bc7111549204fff2fce97196
   var item = _item(sequelize, DataTypes);
   var order = _order(sequelize, DataTypes);
   var orderDetail = _orderDetail(sequelize, DataTypes);
@@ -24,10 +18,7 @@ function initModels(sequelize) {
   user.hasMany(order, { as: "orders", foreignKey: "userId"});
 
   return {
-<<<<<<< HEAD
-=======
     cart,
->>>>>>> 1cebcc3b09466c70bc7111549204fff2fce97196
     item,
     order,
     orderDetail,
