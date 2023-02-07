@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <h1>상품 전체 조회</h1>
+      <h2>
+        <button>홈으로 돌아가기</button>
+      </h2>
+      <table id="table" class="table" border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>이름</th>
+            <th>가입일</th>
+            <th>(포인트)</th>
+            <th>구매상품 조회내역</th>
+            <th>가입승인</th>
+          </tr>
+        </thead>
+        <tbody id="users"></tbody>
+      </table>
+      <ul id="pagination"></ul>
+    </div>
+  </body>
+  <script>
+    document.querySelector("button").addEventListener("click", (e) => {
+      window.location = "http://localhost:3004/api/admin/home";
+    });
+    // let page = new URLSearchParams(location.search).get("page");
+
+    // if (page === null) {
+    //   page = 1;
+    // }
+
+    // fetch(`http://localhost:3004/users?page=${page}`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     if (data.error) {
+    //       alert(data.error);
+    //       window.location.href = `/?page=${page - 1}`;
+    //     }
+
+    //     const ejs = data.users.map((user) => {
+    //       return `
+    //       <tr>
+    //         <td>${user.id}</td>
+    //         <td> <a href='movie.html?id=${user.id}'>${user.movie_title}</td>
+    //         <td>${user.name}</td>
+    //         <td>${user.created_at}</td>
+    //       </tr>`;
+    //     });
+    //     document.getElementById("users").innerHTML = ejs.join("");
+
+    //     // firstpage, lastpage 값 불러오기
+    //     const firstPage = data.pageInfo.firstPage;
+    //     const lastPage = data.pageInfo.lastPage;
+    //     const totalPage = data.pageInfo.totalPage;
+    //     let pages = [];
+
+    //     //id랑 button 추가
+    //     let first = `<li><a href='?page=${
+    //       Number(page) === 1
+    //     }' > 처음페이지 </a></li>`;
+    //     pages.push(first);
+
+    //     if (page - 5 > 0) {
+    //       let prev = `<li><a href='?page=${Number(page) - 5}'> << </a></li>`;
+    //       pages.push(prev);
+    //     }
+
+    //     if (page - 1 > 0) {
+    //       let prev1 = `<li><a href='?page=${Number(page) - 1}'> < </a></li>`;
+    //       pages.push(prev1);
+    //     }
+
+    //     for (let i = firstPage; i <= lastPage; i++) {
+    //       let temp = `<li><a href='?page=${i}'>${i}</a></li>`;
+    //       pages.push(temp);
+    //     }
+
+    //     // let next = `<li><a href='?page=${Number(page) + 1}'> > </a></li>`;
+    //     // pages.push(next);
+
+    //     if (page <= totalPage) {
+    //       let next = `<li><a href='?page=${Number(page) + 1}'> > </a></li>`;
+    //       pages.push(next);
+    //     }
+
+    //     // let next1 = `<li><a href='?page=${Number(page) + 5}'> >> </a></li>`;
+    //     // pages.push(next1);
+
+    //     if (page <= totalPage - 3) {
+    //       let next1 = `<li><a href='?page=${Number(page) + 5}'> >> </a></li>`;
+    //       pages.push(next1);
+    //     }
+
+    //     let last = `<li><a href='?page=${
+    //       page === totalPage
+    //     }'> 마지막 페이지 </a></li>`;
+    //     pages.push(last);
+
+    //     // 1페이지에서 처음 페이지 버튼 삭제
+    //     if (Number(page) === 1) {
+    //       `${"p"}.remove('firstPg')`;
+    //     }
+
+    //     // 마지막 페이지인 13페이지에서 마지막 페이지 버튼 삭제
+    //     if (page === totalPage) {
+    //       `${"p"}.remove('lastPg')`;
+    //     }
+
+    //     document.getElementById("pagination").innerHTML = pages.join("");
+    //   });
+  </script>
+</html>
