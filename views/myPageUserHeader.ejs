@@ -1,0 +1,33 @@
+<div>
+    <button>
+        마이페이지
+    </button>
+    <button>
+        장바구니
+    </button>
+</div>
+<br>
+
+<div>
+    <button onclick = "location.href='/api/myPage/'">
+        전체 (구매내역 확인)
+    </button>
+    <button onclick = "location.href='/api/myPage/user/progress'">
+        상품조회
+    </button>
+</div>
+<br>
+
+<div>
+
+    <% if (list == 0) { %>
+        <%- include("myPageUserMainPaid.ejs") %>
+    <% } else if (list == 1) { %>
+        <%- include("myPageUserMainProgress.ejs") %>
+    <% } %>
+
+</div>
+
+<script>
+    
+</script>
