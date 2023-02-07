@@ -3,6 +3,7 @@ const express = require('express');
 // const { user: User } = require("./models/index");
 
 const router = require('./routes');
+const userMiddleware = require('./middlewares/user-middleware');
 
 const app = express();
 app.set('port', process.env.PORT || 3004);
