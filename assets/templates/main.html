@@ -8,143 +8,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <link href="../../static/css/item_add.css" rel="stylesheet" type="text/css" />
     <title>Document</title>
-    <!-- <style>
-        header h1 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .sj_2 {
-            display: flex;
-            flex-direction: row;
-            width: 1500px;
-            margin-top: 40px;
-            margin-left: auto;
-            margin-right: auto;
-            border-style: solid;
-            border-width: thin;
-        }
-
-        .item_title {
-            margin-left: 30px;
-
-        }
-
-        .modal_1 {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            top: 0;
-            left: 0;
-            display: none;
-        }
-
-        .modal_2 {
-            width: 1000px;
-            height: 700px;
-            background: #ffffff;
-            border-radius: 10px;
-            position: relative;
-            top: 25%;
-            left: 33%;
-            margin-top: -100px;
-            margin-left: -200px;
-            text-align: center;
-            box-sizing: border-box;
-            padding: 74px 0;
-            line-height: 23px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            cursor: default;
-        }
-
-        .modal_3 {
-            height: 50px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 2rem;
-        }
-
-        .modal_4 {
-            height: 70%;
-            display: flex;
-            flex-direction: row;
-        }
-
-        .image {
-            margin-top: 80%;
-        }
-
-        .item_form {
-            width: 80%
-        }
-
-        .item_datail {
-            height: 15%;
-            margin-bottom: 5%;
-            padding-top: 2%;
-            text-align: left;
-            font-weight: bold;
-        }
-
-        .modal_button1 {
-            width: 100%;
-            height: 30%;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .modal_button2 {
-            padding-top: 3%;
-            width: 15%;
-            height: 100px;
-            margin: auto;
-            line-height: 100px;
-        }
-
-        .modal_button3 {
-            width: 100px;
-            height: 50px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border-radius: 30px;
-        }
-
-        .modal_button3:hover {
-            background-color: #ffaeae74;
-        }
-
-        /* 이미지 */
-        .button {
-            display: flex;
-            justify-content: center;
-        }
-
-        .item_image {
-            width: 30%;
-            display: flex;
-            flex-direction: column;
-            margin-right: 40px;
-        }
-
-        label {
-            cursor: pointer;
-            font-size: 1.4rem;
-            font-weight: bold;
-            border: 2px dashed;
-        }
-
-        #image_file {
-            visibility: hidden;
-        }
-
-        .modal_1 input {
-            border: none;
-        }
-    </style> -->
 </head>
 
 <body>
@@ -155,70 +18,10 @@
         </h3>
     </header>
 
-    <div class="modal_1" id="modal_1">
-        <div class="modal_2">
-            <div class="modal_3">
-                상품 등록하기
-            </div>
-            <div class="modal_4">
-                <form method="post" enctype="multipart/form-data"></form>
-                <div class="item_image">
-                    <div class="image">
-                        <div class="button">
-                            <label for="image_file">
-                                상품 이미지 등록
-                            </label>
-                        </div>
-                        <input type="file" id="image_file" name="image_file" accept="image/*"
-                            onchange="setThumbnail(event);" />
-                    </div>
-                </div>
-                <div class="item_form">
-                    <div class="item_datail">
-                        상품 이름 : <input id="name" class="input">
-                    </div>
-                    <div class="item_datail">
-                        가격 : <input id="price" class="input">
-                    </div>
-                    <div class="item_datail">
-                        설명 : <input id="desc" class="input">
-                    </div>
-                    <div class="item_datail">
-                        마케터 : <input id="marketer" class="input">
-                    </div>
-                    <!-- <div class="item_datail">
-                        카테고리 : <input id="category" class="input"> -->
-                    <div class="modal_button1">
-                        <div class="modal_button2">
-                            <button onclick="Registration()" class="modal_button3">
-                                등록
-                            </button>
-                        </div>
-
-                        <div class="modal_button2">
-                            <button class="modal_button3" id="close_area">
-                                취소
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            </form>
-        </div>
-
-    </div>
-    </div>
-    </div>
-
-
     <nav>
-        <button id="open_area" class="open_area">
-            상품 등록
-        </button>
     </nav>
     <div id="body_item" class="sj_1">
-        <div id="item" class="sj_2">
+        <!-- <div id="item" class="sj_2">
             <img src="https://cdn.ftoday.co.kr/news/photo/201510/44298_46389_2338.jpg" width="225">
             <div class="sj_3">
                 <div class="item">
@@ -244,50 +47,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <script>
 
-        // 모달 열고,닫기
-        const closeBtn = modal_1.querySelector("#close_area")
-
-        closeBtn.addEventListener("click", e => {
-            modal_1.style.display = "none"
-        });
-
-        document.getElementById("open_area").onclick = function () {
-            modal_1.style.display = "block"
-        };
-
-        document.getElementById("modal_button3").onclick = function () {
-            const name = $("#name").val();
-            const price = $("#price").val();
-            const image = $('input[name="image_file"]').get(0).files[0];
-            const desc = $('#desc').val();
-            const marketer = $('#marketer').val();
-
-            $.ajax({
-                // headers: { 미들웨어 완성시 주석 풀기
-                //     'Authorization': 'Bearer ' + token,
-                // },
-                type: "POST",
-                url: "/owner/item",
-                data: {
-                    itemName: name,
-                    itemPrice: price,
-                    itemImg: image,
-                    itemDesc: desc,
-                    marketer: marketer
-                },
-                success: function (response) {
-                    window.location.reload();
-                }
-            });
-        };
-
-
-        //상품 목록 조회
-        function item_show() {
+        // 전체 조회
+        function all_item() {
             $.ajax({
                 type: "GET",
                 url: "/items",
@@ -296,10 +61,25 @@
                     
                 },
                 success: function (response) {
+                    let rows = response["item"];
+
+                    for (let i = 0; i < rows.length; i++) {
+                        let itemname = rows[i]['itemName'];
+                        let itemcategory = rows[i]['itemCategory'];
+                        let itemimg = rows[i]['itemImg'];
+                        let itemdesc = rows[i]['itemDesc'];
+                        let itemprice = rows[i]['itemPrice'];
+                        let marketer = rows[i]['marketer'];
+                        let createdAt = rows[i]['itemCreatedAt'];
+                        let updatedAt = rows[i]['itemUpdatedAt'];
+
+                        let tempHtml = `
+                        `
+                        $('#body_item').append(tempHtml);
+                    }
                 }
             })
         }
-
     </script>
 </body>
 
