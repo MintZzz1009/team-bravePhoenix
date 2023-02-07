@@ -18,11 +18,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     itemImg: {
       type: DataTypes.STRING(100),
-<<<<<<< HEAD
-      allowNull: false
-=======
       allowNull: true
->>>>>>> 1cebcc3b09466c70bc7111549204fff2fce97196
     },
     itemDesc: {
       type: DataTypes.STRING(255),

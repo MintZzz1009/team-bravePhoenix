@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.js"
+      integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .wrapper {
+        width: 200px;
+        background-color: #cce1ff;
+        border: none;
+        color: darkcyan;
+        margin: auto;
+        display: block;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <form id="form">
+        <h3>상세조회</h3>
+        <table id="table" class="table" border="1" align="center">
+          <tr>
+            <th>ID</th>
+            <td><%= member.userId %></td>
+          </tr>
+          <tr>
+            <th>계정</th>
+            <td>
+              <input
+                id="adminValid"
+                type="text"
+                value="<%= member.adminValid %>"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>닉네임</th>
+            <td>
+              <input
+                id="userNickname"
+                type="text"
+                value="<%= member.userNickname %>"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>비밀번호</th>
+            <td>
+              <input
+                id="userPassword"
+                type="text"
+                value="<%= member.userPassword %>"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>핸드폰</th>
+            <td>
+              <input
+                id="userPhoneNumber"
+                type="text"
+                value="<%= member.userPhoneNumber %>"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>이메일</th>
+            <td>
+              <input
+                id="userEmail"
+                type="text"
+                value="<%= member.userEmail %>"
+              />
+            </td>
+          </tr>
+          <tr>
+            <th>계정 생성일</th>
+            <td><%= member.userCreatedAt %></td>
+          </tr>
+        </table>
+        <button class="wrapper" onclick="updateUser()">수정완료</button>
+      </form>
+    </div>
+    <!-- <button id="wrapper" id="join">수정완료</button> -->
+  </body>
+  <script>
+    // const form = document.querySelector("#join");s
+    // console.log(document.forms.form);
+    // console.log(new FormData(document.forms.form));
+    // console.log(form.member.userNickname);
+    console.log($("#userNickname").val());
+    // form.addEventListener("click", updateUser(10));
+
+    function updateUser() {
+      const adminValid = $("#adminValid").val();
+      const userNickname = $("#userNickname").val();
+      const userPassword = $("#userPassword").val();
+      const userEmail = $("#userEmail").val();
+      const userPhoneNumber = $("#userPhoneNumber").val();
+      console.log("ㅇㅇ");
+      console.log(window.location);
+      debugger;
+      $.ajax({
+        type: "patch",
+        url: `/api/admin/home/member/edit/${id}`,
+        // contentType: "application/json",
+        data: {
+          adminValid: adminValid,
+          userNickname: userNickname,
+          userPassword: userPassword,
+          userEmail: userEmail,
+          userPhoneNumber: userPhoneNumber,
+        },
+        success: function (response) {
+          console.log(response.message);
+          // window.location.href = "/api/admin/home/member/";
+        },
+        error: function (response) {
+          console.error(error);
+        },
+      });
+    }
+  </script>
+</html>
