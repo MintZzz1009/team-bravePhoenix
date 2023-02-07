@@ -4,6 +4,11 @@ const { user, order, sequelize } = require("../models");
 const { Op } = require("sequelize");
 const moment = require("moment/moment");
 
+// 관리자 로그인 페이지
+router.get("/admin/login", async (req, res, next) => {
+  res.render("adminLogin.ejs", {});
+});
+
 // import crypto from "crypto";
 
 // 관리자 로그인 진행
@@ -21,11 +26,6 @@ const moment = require("moment/moment");
 //   } else {
 //     res.render("login", { isLogin: false });
 //   }
-// });
-
-// router.get("/admin/login", async (req, res, next) => {
-//   const msg = req.query.msg;
-//   res.render("./admin/login", { msg });
 // });
 
 // router.post("/admin/login", async (req, res, next) => {
@@ -67,7 +67,7 @@ router.get("/admin/home", async (req, res, next) => {
 router.get("/admin/home/member", async (req, res) => {
   try {
     const members = await user.findAll({
-      where: { adminValid: { [Op.ne]: [2] } },
+      where: { adminValid: { [Op.ne]: 2 } },
     });
     //회원계정 구분
     members.forEach((g) => {
@@ -100,27 +100,46 @@ router.get("/admin/home/member", async (req, res) => {
 //개인 회원관리 조회
 router.get("/admin/home/member/:id", async (req, res, next) => {
   const { id } = req.params;
-  //console.log(id);
-  const members = await user.findAll({
-    raw: true,
-    where: { userId: id },
-  });
-  //console.log(members[0].userId);
-  //회원계정 구분
-  members.forEach((g) => {
-    if (g.adminValid === 0) {
-      g.adminValid = "고객";
-    } else {
-      g.adminValid = "사장";
-    }
-  });
-  console.log(members[0]);
-  res.render("adminMemberIn.ejs", { members: members[0] });
+
+  const member = await user.findByPk(id, { raw: true });
+  member.adminValid = member.adminValid === 0 ? "고객" : "사장";
+  member.userCreatedAt = moment(member.userCreatedAt).format(
+    "YYYY-MM-DD HH:mm:ss"
+  );
+  res.render("adminMemberIn.ejs", { member: member });
 });
 
 //회원관리 수정
-router.put("/admin/home/member/:id", async (req, res, next) => {
-  res.render("adminMemberIn.ejs", {});
+//ptarselnt() 함수를 통해 숫자 변환 진행
+//router.put("/admin/home/member/:id", async (req, res, next) => {
+//  res.render("adminMemberIn.ejs", {});
+//});
+router.patch("/admin/home/member/edit/:id", async (req, res, next) => {
+  const { adminValid, userNickname, userPassword, userPhoneNumber, userEmail } =
+    req.body;
+  const { id } = req.params;
+
+  console.log(id);
+  console.log(userNickname);
+  console.log(userEmail);
+
+  await user.update(
+    {
+      adminValid: adminValid,
+      userNickname: userNickname,
+      userPassword: userPassword,
+      userPhoneNumber: userPhoneNumber,
+      userEmail: userEmail,
+    },
+    {
+      where: {
+        userId: id,
+      },
+    }
+  );
+  return res.status(200).send({
+    message: "수정 성공",
+  });
 });
 
 //회원관리 삭제
