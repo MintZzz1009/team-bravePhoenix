@@ -1,54 +1,45 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('item', {
-    itemId: {
+  return sequelize.define('orderDetail', {
+    orderDetailId: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    itemName: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
-    itemCategory: {
+    orderId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
-    },
-    itemImg: {
-      type: DataTypes.STRING(100),
-      allowNull: true
-    },
-    itemDesc: {
-      type: DataTypes.STRING(255),
       allowNull: false
     },
-    itemPrice: {
+    buyer: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
     marketer: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'user',
-        key: 'userId'
-      }
+      allowNull: false
     },
-    itemCreatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    itemId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    itemUpdatedAt: {
-      type: DataTypes.DATE,
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    orderStatus: {
+      type: DataTypes.TINYINT,
       allowNull: false,
+      defaultValue: 0
+    },
+    orderDetailCreatedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
-    tableName: 'item',
+    tableName: 'orderDetail',
     timestamps: false,
     indexes: [
       {
@@ -56,14 +47,15 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "itemId" },
+          { name: "orderDetailId" },
         ]
       },
       {
-        name: "marketer_idx",
+        name: "orderDetail_UN",
+        unique: true,
         using: "BTREE",
         fields: [
-          { name: "marketer" },
+          { name: "orderDetailId" },
         ]
       },
     ]

@@ -1,0 +1,247 @@
+<h2>
+    배송현황
+</h2>
+<table border = "1">
+    <thead>
+        <th>
+            주문 번호
+        </th>
+        <th>
+            주문 이름
+        </th>
+        <th>
+            주문 상태
+        </th>
+        <th>
+            주문일
+        </th>
+    </thead>
+
+    <tbody id ="progressList" class="contentsList">
+        <tr>
+            <td>
+                td1
+            </td>
+            <td>
+                td2
+            </td>
+            <td>
+                td3
+            </td>
+            <td>
+                td4
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+<br>
+
+<table border = "1">
+    <thead>
+        <th>
+
+        </th>
+        <th>
+    
+        </th>
+    </thead>
+
+    <tbody id = "anOrder">
+        <tr>
+            <td>
+                
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+<div class="modal" tabindex="-1" id="modal">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">주문 확인</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalText">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <script defer src="../js/myPageUserMainProgress.js"></script> -->
+  <script>
+    
+
+$(document).ready(function(){
+
+    document.getElementById("progressList").innerHTML = "";
+    
+
+    $.ajax({
+        type: "GET",
+        url: "/api/myPage/user/orders",
+        async: false,
+        data:{},
+        success: function (response) {
+            console.log(response);
+            let rows = response;                
+            let tempHtml = ``;
+
+            for(let i = 0; i < rows.length; i++){
+                tempHtml += `<tr onclick = "printAnOrder(${rows[i].orderId})">
+                                <td id="orderId">
+                                    ${rows[i].orderId} &nbsp;
+                                </td>
+                                <td>
+                                    ${rows[i].orderName} &nbsp;
+                                </td>
+                                <td>
+                                    진행 중 &nbsp;
+                                </td>
+                                <td>
+                                    ${rows[i].orderCreatedAt}
+                                </td>
+                            </tr>`;
+            }
+
+            $("#progressList").append(tempHtml);
+        }
+    });
+});
+
+function printAnOrder(orderId){
+    const statusList = ["상품 확인중", "상품 준비중", "배송중", "배송완료"];
+        // e.preventDefault();
+    $('#modal').modal("show");   
+    
+    $.ajax({
+        type: "GET",
+        url: "/api/myPage/user/order/" + orderId,
+        success: function (response){
+            document.getElementById("modalText").innerHTML = "";
+            let row = response;
+            let tempHtml = `<table>
+                            <tr>
+                                <td>
+                                    주문번호 &nbsp;
+                                </td>
+                                <td>
+                                    ${row.orderId}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    주문일자 &nbsp;
+                                </td>
+                                <td>
+                                    ${row.orderCreatedAt}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    수령인 주소 &nbsp;
+                                </td>
+                                <td>
+                                    ${row.orderAddress}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> 
+                                    수령인 전화번호 &nbsp;
+                                </td>
+                                <td>
+                                    ${row.orderPhoneNumber}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    수령인 성함 &nbsp;
+                                </td>
+                                <td>
+                                    ${row.orderRecipientName}
+                                </td>                                        
+                            </tr>
+                            <tr>
+                                <td>
+                                    주문 요구사항 &nbsp;
+                                </td>
+                                <td>
+                                    ${row.orderRequests}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    결제금액 &nbsp;
+                                </td>
+                                <td>
+                                    ${row.totalPrice}
+                                </td>
+                            </tr>
+                            </table>
+            `;
+
+            tempHtml += `
+                <br>
+                <table>
+                    <th>
+                        상품사진 &nbsp;
+                    </th>
+                    <th>
+                        상품이름 &nbsp;
+                    </th>
+                    <th>
+                        상품가격 &nbsp;
+                    </th>
+                    <th>
+                        구매수량 &nbsp;
+                    </th>
+                    <th>
+                        배송상태 
+                    </th>                           
+
+            `;
+
+            for(let i = 0; i< row.orderItems.length; i++){
+                tempHtml += `
+                    <tr>
+                        <td>
+                            <img src="${row.orderItems[i].itemImg}"> &nbsp;
+                        </td>
+                        <td>
+                            ${row.orderItems[i].itemName} &nbsp;
+                        </td>
+                        <td>
+                            ${row.orderItems[i].itemPrice} &nbsp;
+                        </td>
+                        <td>
+                            ${row.orderItems[i].itemQuantity} &nbsp;
+                        </td>
+                        <td>
+                            ${statusList[row.orderItems[i].itemStatus]}
+                        </td>
+                    </tr>
+                `;
+            }
+
+            tempHtml += `                        </table>`;
+            console.log(row);
+
+            $('#modalText').append(tempHtml);
+            
+            
+        }
+    })
+}
+  </script>
+

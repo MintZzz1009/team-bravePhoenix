@@ -1,0 +1,135 @@
+header h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sj_2 {
+    display: flex;
+    flex-direction: row;
+    width: 1500px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-width: thin;
+}
+
+.item2 {
+    margin-left: 30px;
+
+}
+
+.modal_1 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.modal_2 {
+    width: 1000px;
+    height: 700px;
+    background: #ffffff;
+    border-radius: 10px;
+    position: relative;
+    top: 25%;
+    left: 33%;
+    margin-top: -100px;
+    margin-left: -200px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 74px 0;
+    line-height: 23px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+}
+
+.modal_3 {
+    height: 50px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.modal_4 {
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+}
+
+.image {
+    margin-top: 80%;
+}
+
+.item_form {
+    width: 80%
+}
+
+.item_datail {
+    height: 15%;
+    margin-bottom: 5%;
+    padding-top: 2%;
+    text-align: left;
+    font-weight: bold;
+}
+
+.modal_button1 {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal_button2 {
+    padding-top: 3%;
+    width: 15%;
+    height: 100px;
+    margin: auto;
+    line-height: 100px;
+}
+
+.modal_button3 {
+    width: 100px;
+    height: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 30px;
+}
+
+.modal_button3:hover {
+    background-color: #ffaeae74;
+}
+
+/* 이미지 */
+.button {
+    display: flex;
+    justify-content: center;
+}
+
+.item_image {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+}
+
+label {
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border: 2px dashed;
+}
+
+#image_file {
+    visibility: hidden;
+}
+
+.modal_1 input {
+    border: none;
+}

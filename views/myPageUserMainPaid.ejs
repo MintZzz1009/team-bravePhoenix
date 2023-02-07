@@ -1,0 +1,76 @@
+<h2>
+    결제내역
+</h2>
+<table border = "1">
+    <thead>
+        <th>
+            주문 번호
+        </th>
+        <th>
+            주문 이름
+        </th>
+        <th>
+            결제금액
+        </th>
+        <th>
+            결제일
+        </th>
+    </thead>
+
+    <tbody id="paidList">            
+        <tr>
+            <td>
+                td1
+            </td>
+            <td>
+                td2
+            </td>
+            <td>
+                td3
+            </td>
+            <td>
+                td4
+            </td>
+        </tr>
+    </tbody>
+    
+</table>
+
+<script>
+    $(document).ready(function(){
+
+        document.getElementById("paidList").innerHTML = "";
+
+        $.ajax({
+            type: "GET",
+            url: "/api/myPage/user/orders/paid",
+            async: false,
+            data:{},
+            success: function (response) {
+                
+                let rows = response;                
+                let tempHtml = ``;
+
+                for(let i = 0; i < rows.length; i++){
+                    tempHtml += `<tr>
+                                    <td id="orderId">
+                                        ${rows[i].orderId} &nbsp;
+                                    </td>
+                                    <td>
+                                        ${rows[i].orderName} &nbsp;
+                                    </td>
+                                    <td>
+                                        ${rows[i].totalPrice} &nbsp;
+                                    </td> 
+                                    <td>
+                                        ${rows[i].orderCreatedAt}
+                                    </td>
+                                </tr>`;
+                }
+
+                $("#paidList").append(tempHtml);
+            }
+        });
+    });
+    
+</script>

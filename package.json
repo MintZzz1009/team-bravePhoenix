@@ -4,7 +4,7 @@
   "description": "23.02.01(수) ~ 23.02.07(화)",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/MintZzz1009/team-bravePhoenix#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
     "crypto-js": "^4.1.1",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.4",
     "mysql2": "^3.1.0",
     "sequelize": "^6.28.0",
@@ -27,5 +30,6 @@
   },
   "devDependencies": {
     "sequelize-cli": "^6.6.0"
-  }
+  },
+  "keywords": []
 }
