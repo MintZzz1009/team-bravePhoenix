@@ -7,14 +7,12 @@ const MyPageRenderer = require("../renderers/myPageRenderer");
 const myPageController = new MyPageController();
 const myPageRenderer = new MyPageRenderer();
 
-// router.use(express.json());
-
 //////////////////////////////
 //유저 관련 api
 
-router.get("/user", myPageController.getUser);
-router.delete("/user", myPageController.destroyUser);
-router.patch("/user", myPageController.updateUser);
+router.get("/user", myPageController.getUser); //ajax완료
+router.delete("/user", myPageController.destroyUser); //ajax완료
+router.patch("/user", myPageController.updateUser); //ajax완료
 
 router.get("/user/orders", myPageController.getAllOrdersInProgress); //ajax완료
 router.get("/user/order/:orderId", myPageController.getAnOrderInProgress); //ajax완료
@@ -39,13 +37,13 @@ router.patch("/owner/order/item/:orderId&:itemId", myPageController.changeOrderS
 router.get("/", myPageRenderer.getMyPage);
 router.get("/user/progress", myPageRenderer.getMyPageUserMainProgress);
 router.get("/owner/progress", myPageRenderer.getMyPageOwnerMainProgress);
+router.get("/cart", myPageRenderer.getMyPageUserCart);
 
-// router.use(express.json());
+/////////////////////////////
+//장바구니 관련
 
-// router.post("/test", async (req, res) => {
-//     const {test} = req.body
-//     console.log()
-//     res.status(200).send();
-// });
+router.get("/cart/items", myPageController.getAllItemsInCart); //ajax완료
+router.patch("/cart/item/:cartId", myPageController.changeQuantityInCart); //ajax완료
+router.delete("/cart/item/:cartId", myPageController.destroyAnItemInCart); //ajax완료
 
 module.exports = router;

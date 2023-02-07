@@ -12,6 +12,10 @@ function initModels(sequelize) {
   var orderDetail = _orderDetail(sequelize, DataTypes);
   var user = _user(sequelize, DataTypes);
 
+  cart.belongsTo(item, { as: "item", foreignKey: "itemId"});
+  item.hasMany(cart, { as: "carts", foreignKey: "itemId"});
+  cart.belongsTo(user, { as: "user", foreignKey: "userId"});
+  user.hasMany(cart, { as: "carts", foreignKey: "userId"});
   item.belongsTo(user, { as: "marketer_user", foreignKey: "marketer"});
   user.hasMany(item, { as: "items", foreignKey: "marketer"});
   order.belongsTo(user, { as: "user", foreignKey: "userId"});

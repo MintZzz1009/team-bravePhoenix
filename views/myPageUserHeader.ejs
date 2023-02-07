@@ -1,8 +1,8 @@
 <div>
-    <button>
+    <button onclick="printUserInfo()">
         마이페이지
     </button>
-    <button>
+    <button onclick = "location.href='/api/myPage/cart'">
         장바구니
     </button>
 </div>
@@ -24,10 +24,133 @@
         <%- include("myPageUserMainPaid.ejs") %>
     <% } else if (list == 1) { %>
         <%- include("myPageUserMainProgress.ejs") %>
+    <% } else if (list == 2) { %>
+        <%- include("myPageUserCart.ejs") %>
     <% } %>
 
 </div>
 
+<div class="modal" tabindex="-1" id="modalMypage">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">회원 정보</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modalMypageText">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer" id="modalFooter">
+            <button type="button" class="btn btn-primary" onclick="destroyUser()" style="background-color: red;">회원탈퇴</button>  <span style="visibility: hidden;"> 꼼수꼼수꼼수꼼수꼼수꼼수꼼숚</span>
+            <button type="button" class="btn btn-primary" onclick="updateUserInfo()">수정</button>  
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
 <script>
+
+    function printUserInfo(){
+
+        $('#modalMypage').modal("show");
+        document.getElementById("modalMypageText").innerHTML = "";
+
+        $.ajax({
+            type: "GET",
+            url: "/api/myPage/user",
+            success: function (response){
+                console.log(response);
+
+                const userNickname = response.userNickname;
+                const userEmail = response.userEmail;
+                const userPhoneNumber = response.userPhoneNumber;
+                const userCreatedAt = response.userCreatedAt;
+
+                let tempHtml = `
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">유저 이름</span>
+                        <input type="text" id="userNickname" class="form-control" placeholder="${userNickname}" aria-label="${userNickname}" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" >유저 이메일</span>
+                        <input type="text" id="userEmail" class="form-control" placeholder="${userEmail}" aria-label="${userEmail}" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" >유저 전화번호</span>
+                        <input type="text" id="userPhoneNumber" class="form-control" placeholder="${userPhoneNumber}" aria-label="${userPhoneNumber}" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" >변경할 비밀번호</span>
+                        <input type="password" id="userPassword" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" >변경할 비밀번호 확인</span>
+                        <input type="password" id="userConfirmPassword" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                    </div>
+
+                    <div>
+                        가입일: ${userCreatedAt} &nbsp; <span id = "errMsgSpan" style = "color: red;"> </span>
+                    </div
+                `;
+
+                $('#modalMypageText').append(tempHtml);               
+
+            }
+        })
+
+    }
+
+    function updateUserInfo(){
+
+        const userNickname = $('#userNickname').val();
+        const userPassword = $('#userPassword').val();
+        const userConfirmPassword = $('#userConfirmPassword').val();
+        const userEmail = $('#userEmail').val();
+        const userPhoneNumber = $('#userPhoneNumber').val();
+
+        document.getElementById("errMsgSpan").innerHTML = "";
+
+        $.ajax({
+            type: "PATCH",
+            url: "/api/myPage/user",
+            data:{
+                userNickname,
+                userPassword,
+                userConfirmPassword,
+                userEmail,
+                userPhoneNumber
+            },
+            success: function (response){
+                if(response.errMsg){
+                    console.log(response.errMsg);
+                    $('#errMsgSpan').append(response.errMsg);
+                }else{
+                    console.log(response.msg);
+                    alert(response.msg);
+                    $('#modalMypage').modal('hide');
+
+                }
+            }
+        })
+        
+    }
+
+    function destroyUser(){
+        if(confirm("정말 탈퇴하시겠습니까?") === true){
+            $.ajax({
+                type: "DELETE",
+                url: "/api/myPage/user",
+                success: function (response){
+                    alert(response.msg);
+                    $('#modalMypage').modal('hide');
+                }
+            });
+        }else{
+            return;
+        }
+    }
     
 </script>

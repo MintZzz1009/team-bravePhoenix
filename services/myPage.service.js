@@ -13,9 +13,10 @@ class MyPageService{
         // console.log(user);
 
         return {
-            useruserNickname: user.userNickname,
+            userNickname: user.userNickname,
             userPhoneNumber: user.userPhoneNumber,
             userEmail: user.userEmail,            
+            userCreatedAt: user.userCreatedAt            
         }
     }
 
@@ -28,29 +29,34 @@ class MyPageService{
     }
 
     //유저 이름, 전화번호, 비밀번호 양식 검증 필요
-    async updateUser(userId, userNickname, userPhoneNumber, userPassword, userConfirmPassword){        
+    async updateUser(userId, userNickname, userPhoneNumber, userEmail, userPassword, userConfirmPassword){        
 
         let check = false;
         let encryptedUserPassword = "";
         // let nicknameCheck = false;
         // let phoneNumberCheck = false;
 
-        if(userPassword === userConfirmPassword){
-            check = true;
-            encryptedUserPassword = bcrypt.hashSync(userPassword, 3);
+        if(userPassword.length > 0 || userConfirmPassword.length > 0){
+
+            if(userPassword === userConfirmPassword){
+                check = true;
+                encryptedUserPassword = bcrypt.hashSync(userPassword, 3);
+            }
+
+            if(!check){
+                return {errMsg: "비밀번호 확인란 미일치 오류"};
+            }
         }
 
-        if(!check){
-            return {msg: "비밀번호 확인란 미일치 오류"};
-        }
+        if(await this.myPageRepository.getUserByNickname(userId, userNickname)){
+            return {errMsg: "중복된 닉네임 오류"};
+        } else if (await this.myPageRepository.getUserByPhoneNumber(userId, userPhoneNumber)){
+            return {errMsg: "중복된 전화번호 오류"};
+        } else if (await this.myPageRepository.getUserByEmail(userId, userEmail)){
+            return {errMsg: "중복된 이메일 오류"};
+        }      
 
-        if(await this.myPageRepository.getUserByNickname(userNickname)){
-            return {msg: "중복된 닉네임 오류"};
-        } else if (await this.myPageRepository.getUserByPhoneNumber(userPhoneNumber)){
-            return {msg: "중복된 전화번호 오류"};
-        }       
-
-        const msg = await this.myPageRepository.updateUser(userId, userNickname, userPhoneNumber, encryptedUserPassword);
+        const msg = await this.myPageRepository.updateUser(userId, userNickname, userPhoneNumber, userEmail, encryptedUserPassword);
 
         return msg;
     }
@@ -196,8 +202,26 @@ class MyPageService{
         return msg;
     }
 
-}
+/////////////////////////////////////////////////
 
+    async getAllItemsInCart(userId){
+        const items = await this.myPageRepository.getAllItemsInCart(userId);
+
+        return items;
+    }
+
+    async changeQuantityInCart(userId, cartId, quantity){
+        const msg = await this.myPageRepository.changeQuantityInCart(userId, cartId, quantity);
+
+        return msg;
+    }
+
+    async destroyAnItemInCart(userId, cartId){
+        const msg = await this.myPageRepository.destroyAnItemInCart(userId, cartId);
+
+        return msg;
+    }
+}
 
 
 module.exports = MyPageService;

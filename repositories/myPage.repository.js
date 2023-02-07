@@ -1,4 +1,4 @@
-const { user: User, order: Order, orderDetail: OrderDetail, item: Item, sequelize } = require("../models");
+const { user: User, order: Order, orderDetail: OrderDetail, item: Item, cart: Cart, sequelize } = require("../models");
 const { Op, QueryTypes } = require("sequelize");
 
 class MyPageRepository{    
@@ -40,18 +40,32 @@ class MyPageRepository{
         }         
     }
 
-    async updateUser(userId, userNickname, userPhoneNumber, userPassword){
+    async updateUser(userId, userNickname, userPhoneNumber, userEmail, userPassword){
 
         try{
-            await User.update({
-                userNickname: userNickname,
-                userPhoneNumber: userPhoneNumber,
-                userPassword: userPassword
-            },{
-                where:{
-                    userId: userId
-                }
-            });
+            // await User.update({
+            //     userNickname: userNickname,
+            //     userPhoneNumber: userPhoneNumber,
+            //     userPassword: userPassword,
+            //     userEmail: userEmail
+            // },{
+            //     where:{
+            //         userId: userId
+            //     }
+            // });
+
+            if(userNickname.length > 0){
+                await User.update({userNickname}, {where:{userId}});
+            }
+            if(userPhoneNumber.length > 0){
+                await User.update({userPhoneNumber}, {where:{userId}});
+            }
+            if(userEmail.length > 0){
+                await User.update({userEmail}, {where:{userId}});
+            }
+            if(userPassword.length > 0){
+                await User.update({userPassword}, {where:{userId}});
+            }            
 
             return {msg: "변경 성공"};
 
@@ -60,12 +74,16 @@ class MyPageRepository{
         }        
     }
     
-    async getUserByNickname(userNickname){
+    async getUserByNickname(userId, userNickname){
 
         try{
             const user = await User.findOne({
                 where: {
-                    userNickname: userNickname
+                    userNickname: userNickname,
+                    userId: {
+                        [Op.notIn]: [userId]
+                    }
+                    
                 }                
             })
 
@@ -77,12 +95,15 @@ class MyPageRepository{
 
     }
 
-    async getUserByPhoneNumber(userPhoneNumber){
+    async getUserByPhoneNumber(userId, userPhoneNumber){
 
         try{
             const user = await User.findOne({
                 where: {
-                    userPhoneNumber: userPhoneNumber
+                    userPhoneNumber: userPhoneNumber,
+                    userId: {
+                        [Op.notIn]: [userId]
+                    }
                 }                
             })
 
@@ -91,7 +112,25 @@ class MyPageRepository{
         } catch (err) {
             console.log(err);
         }  
+    }
 
+    async getUserByEmail(userId, userEmail){
+
+        try{
+            const user = await User.findOne({
+                where: {
+                    userEmail: userEmail,
+                    userId: {
+                        [Op.notIn]: [userId]
+                    }
+                }                
+            })
+
+            return user;
+
+        } catch (err) {
+            console.log(err);
+        }  
     }
 
     
@@ -325,7 +364,7 @@ class MyPageRepository{
                 where od.marketer = ? and od.orderId = ? and od.itemId = ?;
             `;
 
-            const item = sequelize.query(query, {
+            const item = await sequelize.query(query, {
                 type: QueryTypes.SELECT,
                 replacements: [userId, orderId, itemId]
             });
@@ -359,7 +398,65 @@ class MyPageRepository{
         }
     }
 
+    //////////////////////////////////////////////////
 
+    async getAllItemsInCart(userId){
+        try{
+            const query = `
+                select * from cart c
+                inner join item i on c.itemId = i.itemId
+                where c.userId = ?
+                order by cartCreatedAt desc
+            `;
+
+            const items = await sequelize.query(query, {
+                type: QueryTypes.SELECT,
+                replacements: [userId]
+            })
+
+            return items;
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async changeQuantityInCart(userId, cartId, quantity){
+        
+        try{
+            await Cart.update({
+
+                quantity: quantity
+
+            },{
+                where:{
+                    userId: userId,
+                    cartId: cartId
+                }
+            })
+
+            return {msg: "변경 성공"};
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async destroyAnItemInCart(userId, cartId){
+        try{
+            await Cart.destroy({
+                where: {
+                    userId: userId,
+                    cartId: cartId
+                }
+            })
+
+            return {msg: "삭제 성공"};
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
 
 
