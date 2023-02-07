@@ -4,6 +4,7 @@ const router = express.Router();
 const MyPageController = require("../controllers/myPage.controller");
 const MyPageRenderer = require("../renderers/myPageRenderer");
 
+
 const myPageController = new MyPageController();
 const myPageRenderer = new MyPageRenderer();
 
