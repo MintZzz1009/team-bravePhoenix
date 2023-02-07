@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const router = require("./routes");
 const { user: User } = require("./models/index");
+const userMiddleware = require('./middlewares/user-middleware');
 
 const app = express();
 app.set('port', process.env.PORT || 3004);
