@@ -9,15 +9,28 @@ module.exports = function(sequelize, DataTypes) {
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'userId'
+      }
     },
     itemId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'item',
+        key: 'itemId'
+      }
     },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    cartCreatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
     sequelize,
@@ -37,6 +50,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "itemId" },
+        ]
+      },
+      {
+        name: "cart_FK",
+        using: "BTREE",
+        fields: [
+          { name: "userId" },
         ]
       },
     ]

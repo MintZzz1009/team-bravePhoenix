@@ -9,7 +9,7 @@ class MyPageController{
     getUser = async (req, res, next) => {
         // const userId = res.locals.a.userId;
 
-        const userId = 1;
+        const userId = 6;
 
         const user = await this.myPageService.getUser(userId);
 
@@ -21,7 +21,7 @@ class MyPageController{
     destroyUser = async (req, res, next) => {
         // const userId = res.locals.a.userId;
 
-        const userId = 2;
+        const userId = 6;
 
         const msg = await this.myPageService.destroyUser(userId);        
 
@@ -34,9 +34,9 @@ class MyPageController{
         // const userId = res.locals.a.userId;
         
         const userId = 6;
-        const { userNickname, userPhoneNumber, userPassword, userConfirmPassword } = req.body;        
+        const { userNickname, userPhoneNumber, userEmail, userPassword, userConfirmPassword } = req.body;        
 
-        const msg = await this.myPageService.updateUser(userId, userNickname, userPhoneNumber, userPassword, userConfirmPassword);
+        const msg = await this.myPageService.updateUser(userId, userNickname, userPhoneNumber, userEmail, userPassword, userConfirmPassword);
 
         return res.status(200).send(msg);
     }
@@ -152,6 +152,38 @@ class MyPageController{
         const { orderId, itemId } = req.params;
 
         const msg = await this.myPageService.changeOrderStatus(userId, orderId, itemId);
+
+        return res.status(200).send(msg);
+    }
+
+    /////////////////////////////////////////////
+
+    getAllItemsInCart = async (req, res, next) => {
+        // const userId = res.locals.a.userId;
+        const userId = 6;
+
+        const items = await this.myPageService.getAllItemsInCart(userId);
+
+        return res.status(200).json(items);
+    }
+
+    changeQuantityInCart = async (req, res, next) => {
+        // const userId = res.locals.a.userId;
+        const userId = 6;
+        const { cartId } = req.params;
+        const { quantity } = req.body;
+
+        const msg = await this.myPageService.changeQuantityInCart(userId, cartId, quantity);
+
+        return res.status(200).send(msg);
+    }
+
+    destroyAnItemInCart = async (req, res, next) => {
+        // const userId = res.locals.a.userId;
+        const userId = 6;
+        const { cartId } = req.params;
+
+        const msg = await this.myPageService.destroyAnItemInCart(userId, cartId);
 
         return res.status(200).send(msg);
     }
