@@ -221,6 +221,53 @@ class MyPageService{
 
         return msg;
     }
+
+    async createAnItemInCart(userId, itemId, quantity){
+        const msg = await this.myPageRepository.createAnItemInCart(userId, itemId, quantity);
+
+        return msg;
+    }
+
+    async createAnOrder(userId, orderRecipientName, orderAddress, orderPhoneNumber, orderRequests){
+
+        try{
+            let totalPrice = 0;
+            let tempPrice = 0;
+            let itemDetail = {};
+            let marketer = -1;
+            let orderName = "";
+
+            const cartItems = await this.myPageRepository.getAllCartItems(userId);
+            console.log(cartItems);
+
+            const orderMsg = await this.myPageRepository.createAnOrder(userId, orderRecipientName, orderAddress, orderPhoneNumber, orderRequests, totalPrice); // 아직 토탈프라이스 없음
+            const orderId = await this.myPageRepository.getARecentOrderId(userId);
+
+            for(let i=0; i < cartItems.length; i++){
+                marketer = await this.myPageRepository.getAMarketer(cartItems[i].itemId);
+                await this.myPageRepository.createOrderDetails(orderId, userId, marketer, cartItems[i].itemId, cartItems[i].quantity);
+
+                itemDetail = await this.myPageRepository.getAnItemDetail(cartItems[i].itemId);
+                tempPrice = itemDetail.itemPrice;
+
+                totalPrice += (tempPrice * cartItems[i].quantity);
+
+                await this.myPageRepository.destroyAnItemInCart(userId, cartItems[i].cartId);
+            }        
+
+            if(cartItems.length > 1){
+                orderName = itemDetail.itemName + "외 " + (cartItems.length -1) +"건";
+            }else{
+                orderName = itemDetail.itemName + " 주문건";
+            }
+
+            await this.myPageRepository.updateOrderTotalPriceAndOrderName(orderId, totalPrice, orderName);
+
+            return {msg: "주문 성공", orderMsg};
+        } catch (err) {
+        console.log(err);
+        }
+    }
 }
 
 

@@ -458,7 +458,148 @@ class MyPageRepository{
         }
     }
 
+    async createAnItemInCart(userId, itemId, quantity){
+        try{
+            await Cart.create({
+                userId: userId,
+                itemId: itemId,
+                quantity: quantity
+            })
 
+            return {msg: "담기 성공"};
+
+        } catch (err) {
+            console.log(err);
+        }
+        
+    }
+
+    async createAnOrder(userId, orderRecipientName, orderAddress, orderPhoneNumber, orderRequests, totalPrice){
+        try{
+            await Order.create({
+                userId,
+                orderRecipientName,
+                orderAddress,
+                orderPhoneNumber,
+                orderRequests,
+                totalPrice
+            })
+
+            return {msg: "주문 성공"}
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async updateOrderTotalPriceAndOrderName(orderId, totalPrice, orderName){
+        try{
+            await Order.update({
+                totalPrice,
+                orderName
+            },{
+                where:{
+                    orderId
+                }
+            });
+
+            return {};
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async getARecentOrderId(userId){
+        try{
+            const orderId = await Order.findOne({
+                where:{
+                    userId
+                },
+                order: [["orderId","desc"]]
+            })
+
+            return orderId;
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async getItemArray(itemArray){
+        try{
+            const items = await Item.findAll({
+                where:{
+                    itemId: {[Op.in]: itemArray}
+                }
+            })
+
+            return items;
+        } catch (err) {
+            console.log(err);
+        }
+        
+    }
+
+    async getAMarketer(itemId){
+        try{
+            const marketer = await Item.findOne({
+                where:{
+                    itemId
+                }
+            })
+
+            return marketer.marketer;
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
+    async getAnItemDetail(itemId){
+        try{
+            const itemDetail = await Item.findOne({
+                where:{
+                    itemId
+                }
+            })
+
+            return itemDetail;
+        } catch (err){
+            console.log(err);
+        }
+    }
+
+    async createOrderDetails(orderId, buyer, marketer, itemId, quantity){
+        try{
+            await OrderDetail.create({
+                orderId,
+                buyer,
+                marketer,
+                itemId,
+                quantity
+            })
+
+            return {msg: "주문 상세 작성 성공"}
+
+        } catch (err) {
+            console.log(err);
+
+        }
+    }
+
+    async getAllCartItems(userId){
+        try{
+            const items = await Cart.findAll({
+                where:{
+                    userId
+                }
+            });
+
+            return items;
+        } catch (err){
+            console.log(err);           
+        }
+    }
 
 
 

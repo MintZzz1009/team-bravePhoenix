@@ -27,7 +27,7 @@ router.get("/owner/items", myPageController.getAllItems); //ajax완료
 router.post("/owner/item", myPageController.createAnItem); //ajax완료 //상품사진 업로드 미구현
 router.get("/owner/item/:itemId", myPageController.getAnItem); //ajax완료
 router.delete("/owner/item/:itemId", myPageController.destroyAnItem); //ajax완료 //주문된 상품 있을경우 삭제 불가능한 예외처리 추가필요
-router.patch("/owner/item/:itemId", myPageController.updateAnItem);
+router.patch("/owner/item/:itemId", myPageController.updateAnItem); // ajax 미구현
 
 router.get("/owner/order/items",  myPageController.getAllItemsOrdered); //ajax완료
 router.get("/owner/order/item/:orderId&:itemId", myPageController.getAnItemOrdered); //ajax완료
@@ -46,5 +46,9 @@ router.get("/cart", myPageRenderer.getMyPageUserCart);
 router.get("/cart/items", myPageController.getAllItemsInCart); //ajax완료
 router.patch("/cart/item/:cartId", myPageController.changeQuantityInCart); //ajax완료
 router.delete("/cart/item/:cartId", myPageController.destroyAnItemInCart); //ajax완료
+router.post("/cart/item/:itemId", myPageController.createAnItemInCart); //ajax완료
+
+router.post("/order", myPageController.createAnOrder); //ajax 미구현
+
 
 module.exports = router;

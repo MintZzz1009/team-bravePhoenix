@@ -99,3 +99,26 @@ function destroyAnItemInCart(cartId){
     })
 
 }
+
+function createAnOrder(){
+
+    const orderRecipientName = "테스트";
+    const orderAddress = "테스트주소";
+    const orderPhoneNumber = "000-0230-0020";
+    const orderRequests = "테스트요청사항";
+
+    $.ajax({
+        type: "POST",
+        url: "/api/myPage/order",
+        data:{
+            orderRecipientName,
+            orderAddress, 
+            orderPhoneNumber, 
+            orderRequests
+        },
+        success: function(response){
+            console.log(response);
+            location.reload();
+        }
+    })
+}

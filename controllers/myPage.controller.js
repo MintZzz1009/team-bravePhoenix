@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 //전반적으로 오류 발생 시에 오류번호 ex) status(200) 조정이 필요함
 class MyPageController{
-
+    
     myPageService = new MyPageService();
 
     getUser = async (req, res, next) => {
@@ -184,6 +184,27 @@ class MyPageController{
         const { cartId } = req.params;
 
         const msg = await this.myPageService.destroyAnItemInCart(userId, cartId);
+
+        return res.status(200).send(msg);
+    }
+
+    createAnItemInCart = async (req, res, next) => {
+        // const userId = res.locals.a.userId;
+        const userId = 6;
+        const { itemId } = req.params;
+        const { quantity } = req.body;
+
+        const msg = await this.myPageService.createAnItemInCart(userId, itemId, quantity);
+
+        return res.status(200).send(msg);
+    }
+
+    createAnOrder = async (req, res, next) => {
+        // const userId = res.locals.a.userId;
+        const userId = 6;
+        const { orderRecipientName, orderAddress, orderPhoneNumber, orderRequests } = req.body;
+
+        const msg = await this.myPageService.createAnOrder(userId, orderRecipientName, orderAddress, orderPhoneNumber, orderRequests);
 
         return res.status(200).send(msg);
     }
