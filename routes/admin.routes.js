@@ -13,50 +13,6 @@ router.get("/admin/login", async (req, res, next) => {
 
 // 관리자 로그인 진행
 
-// const session = {};
-
-// router.get("/admin", async (req, res, next) => {
-//   if (req.headers.cookie) {
-//     const [, privateKey] = req.headers.cookie.split("=");
-//     const adminInfo = session[privateKey];
-//     res.render("login", {
-//       isLogin: true,
-//       adminInfo,
-//     });
-//   } else {
-//     res.render("login", { isLogin: false });
-//   }
-// });
-
-// router.post("/admin/login", async (req, res, next) => {
-//   const { adminId, adminPw } = req.body;
-
-//   const [admin] = admin.filter((v) => v.id === adminId && v.pw === adminPw);
-//   if (admin) {
-//     const privateKey = Math.floor(Math.random() * 10000000);
-//     session[privateKey] = admin;
-//     console.log(session);
-//     res.setHeader("Set-Cookie", `connect.id=${privateKey}; path=/`);
-//     res.send("관리자님 로그인 되셨습니다");
-//     res.render("index");
-//   } else {
-//     res.redirect("/admin/login?msg=다시 로그인 부탁드립니다");
-//   }
-// });
-
-// router.get("/admin/logout", (req, res) => {
-//   if (req.headers.cookie) {
-//     if (req.headers.cookie) {
-//       const [, privateKey] = req.headers.cookie.split("=");
-//       delete session[privateKey];
-//       res.setHeader("Set-Cookie", "connect.id=delete; Max-age=0; path=/");
-//       res.render("index");
-//     } else {
-//       res.redirect("/admin/login?msg=로그인 부탁드립니다");
-//     }
-//   }
-// });
-
 //기본 홈페이지
 router.get("/admin/home", async (req, res, next) => {
   res.render("adminIndex.ejs", {});
@@ -91,7 +47,28 @@ router.get("/admin/home/member", async (req, res) => {
         userUpdatedAt: moment(mem.userUpdatedAt).format("YYYY-MM-DD HH:mm:ss"),
       };
     });
-    res.render("adminMember.ejs", { members: memberList });
+
+    //pagination 제작
+    const page = req.query.page;
+    console.log(page);
+    const totalData = members.length;
+    const startIndex = (page - 1) * 3;
+    // const indexPage = totalData.splice(startIndex, 10);
+
+    // 총 페이지수
+    const totlaPage = Math.ceil(totalData / 3);
+    // 화면에 보여질 페이지 그룹
+    const pageGroup = Math.ceil(page / 3);
+    // 화면에 보여질 마지막 페이지
+    const lastPage = pageGroup * 3;
+    // 화면에 보여질 첫번째 페이지
+    const firstPage = lastPage - (3 - 1);
+    console.log(page);
+    res.render(
+      "adminMember.ejs",
+      { members: memberList }
+      // { pageInfo: { firstPage, lastPage, totlaPage } }
+    );
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -110,14 +87,14 @@ router.get("/admin/home/member/:id", async (req, res, next) => {
 });
 
 //회원관리 수정
-//ptarselnt() 함수를 통해 숫자 변환 진행
+//이동 할때 기준 값
 //router.put("/admin/home/member/:id", async (req, res, next) => {
 //  res.render("adminMemberIn.ejs", {});
 //});
-router.patch("/admin/home/member/edit/:id", async (req, res, next) => {
+router.patch(`/admin/home/member/edit/:id`, async (req, res, next) => {
+  const { id } = req.params;
   const { adminValid, userNickname, userPassword, userPhoneNumber, userEmail } =
     req.body;
-  const { id } = req.params;
 
   console.log(id);
   console.log(userNickname);
