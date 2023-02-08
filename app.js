@@ -17,6 +17,7 @@ app.use(express.static(__dirname + '/views')); //정적파일, 이미지파일
 app.use("/api/myPage", express.static(__dirname + '/views'));
 app.use("/api/myPage/user", express.static(__dirname + '/views'));
 app.use("/api/myPage/owner", express.static(__dirname + '/views'));
+app.use("/api/item", express.static(__dirname + '/views'));
 
 
 // app.set('views', __dirname + '/views/myPage');

@@ -1,0 +1,87 @@
+<h2 id="h2ItemName">
+    상품 이름
+</h2>
+    
+<table border = "1">
+    <thead>
+        
+    </thead>
+
+    <tbody id="itemDetail">            
+        <tr>
+            <td>
+                상품 사진
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+    
+</table>
+
+<script>    
+
+
+    $(document).ready(function(){
+
+        const itemId = "<%= itemId %>";
+        const categoryArray = ["식음료", "생활용품", "전자기기", "의류"];
+        document.getElementById("itemDetail").innerHTML = "";
+
+        $.ajax({
+            type: "GET",
+            url: `/api/item/` + itemId,
+            success: function (response){
+                console.log(response);
+                let row = response;
+                let tempHtml = `
+                    <tr>
+                        <td>
+                            상품 사진
+                        </td>
+                        <td>
+                            <img src="${row.itemImg}"
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            상품 설명
+                        </td>
+                        <td>
+                            ${row.itemDesc}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            상품 가격
+                        </td>
+                        <td>
+                            ${row.itemPrice}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            상품 종류
+                        </td>
+                        <td>
+                            ${categoryArray[row.itemCategory]}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            상품 등록일
+                        </td>
+                        <td>
+                            ${row.itemCreatedAt}
+                        </td>
+                    </tr>
+                `;
+
+                $('#itemDetail').append(tempHtml);
+                document.getElementById("h2ItemName").innerHTML = row.itemName; 
+                
+            }
+        });
+    });
+</script>

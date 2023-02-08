@@ -1,0 +1,77 @@
+<h2>
+    전체 상품 목록
+</h2>
+<table border = "1">
+    <thead>
+        <th>
+            상품 종류
+        </th>
+        <th>
+            상품 사진
+        </th>
+        <th>
+            상품 이름
+        </th>
+        <th>
+            상품 가격
+        </th>
+    </thead>
+
+    <tbody id="itemList" class="contentsList">            
+        <tr>
+            <td>
+                td1
+            </td>
+            <td>
+                td2
+            </td>
+            <td>
+                td3
+            </td>
+            <td>
+                td4
+            </td>
+        </tr>
+    </tbody>
+    
+</table>
+
+<script>
+    $(document).ready(function(){
+        document.getElementById("itemList").innerHTML = "";
+
+        const categoryArray = ["식음료", "생활용품", "전자기기", "의류"];
+
+        $.ajax({
+            type: "GET",
+            url: "/api/item/items",
+            success: function(response){
+                console.log(response);
+
+                let rows = response;
+                let tempHtml = ``;
+
+                for(let i= 0; i< rows.length; i++){
+                    tempHtml += `
+                        <tr onclick="location.href='/api/item/detail/${rows[i].itemId}'">
+                            <td>
+                                ${categoryArray[rows[i].itemCategory]}
+                            </td>
+                            <td>
+                                <img src="${rows[i].itemImg}">
+                            </td>
+                            <td>
+                                ${rows[i].itemName}
+                            </td>
+                            <td>
+                                ${rows[i].itemPrice}
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                $('#itemList').append(tempHtml);
+            }
+        })
+    });
+  </script>

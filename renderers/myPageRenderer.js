@@ -3,8 +3,8 @@
 class MyPageRenderer{
 
     getMyPage = async (req, res, next) => {
-        // const adminValid = res.locals.a.adminValid;
-        const adminValid = 1;
+        const adminValid = res.locals.user.adminValid;
+        // const adminValid = 1;
         
         if (adminValid == 0){
             return res.status(200).render("myPageIndex.ejs", {admin: 0, list: 0});

@@ -29,11 +29,10 @@ router.get("/owner/item/:itemId", myPageController.getAnItem); //ajax완료
 router.delete("/owner/item/:itemId", myPageController.destroyAnItem); //ajax완료 //주문된 상품 있을경우 삭제 불가능한 예외처리 추가필요
 router.patch("/owner/item/:itemId", myPageController.updateAnItem);
 
-router.get("/owner/order/items", myPageController.getAllItemsOrdered); //ajax완료
+router.get("/owner/order/items",  myPageController.getAllItemsOrdered); //ajax완료
 router.get("/owner/order/item/:orderId&:itemId", myPageController.getAnItemOrdered); //ajax완료
 router.patch("/owner/order/item/:orderId&:itemId", myPageController.changeOrderStatus); //ajax완료
-
-/////////////////////////////
+///////////////////////////
 //렌더링 관련
 
 router.get("/", myPageRenderer.getMyPage);

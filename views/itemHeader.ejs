@@ -1,6 +1,6 @@
 <div>
-    <button onclick="printUserInfo()">
-        내 정보
+    <button onclick="location.href='/api/myPage'">
+        마이페이지
     </button>
     <button onclick = "location.href='/api/myPage/cart'">
         장바구니
@@ -9,35 +9,32 @@
 <br>
 
 <div>
-    <button onclick = "location.href='/api/myPage/'">
-        구매내역 확인
+    <button onclick = "location.href='/api/item'">
+        전체 상품 조회 ( 새로고침 )
     </button>
-    <button onclick = "location.href='/api/myPage/user/progress'">
-        배송 조회
+    <button onclick = "location.href=''">
+        -
     </button>
 </div>
 <br>
 
-<div>
-
-    <% if (list == 0) { %>
-        <%- include("myPageUserMainPaid.ejs") %>
-    <% } else if (list == 1) { %>
-        <%- include("myPageUserMainProgress.ejs") %>
-    <% } else if (list == 2) { %>
-        <%- include("myPageUserCart.ejs") %>
+<div>    
+    <% if(list == 0){ %>
+        <%- include("itemMainAllItems.ejs") %>    
+    <% } else { %>
+        <%- include("itemMainAnItem.ejs") %>
     <% } %>
-
+    
 </div>
 
-<div class="modal" tabindex="-1" id="modalMypage">
+<div class="modal" tabindex="-1" id="modalItemPage">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">회원 정보</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" id="modalMypageText">
+        <div class="modal-body" id="modalItemPageText">
           <p>Modal body text goes here.</p>
         </div>
         <div class="modal-footer" id="modalFooter">
@@ -51,4 +48,6 @@
     </div>
   </div>
 
-  <script defer type="text/javascript" src="./js/myPageUserHeader.js"></script>
+  <!-- <script defer type="text/javascript" src=""></script> -->
+
+

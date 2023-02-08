@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
 
     if (!authToken || authType !== "Bearer") {
         res.status(401).send({
-            errorMessage: "Error",
+            errorMessage: "Error1",
         });
         return;
     }
@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
         });
     } catch (err) {
         res.status(401).send({
-            errorMessage: "Error",
+            errorMessage: "Error2",
         });
     }
 };
