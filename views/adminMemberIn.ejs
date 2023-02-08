@@ -29,7 +29,10 @@
         <table id="table" class="table" border="1" align="center">
           <tr>
             <th>ID</th>
-            <td><%= member.userId %></td>
+            <td>
+              <input id="test12" type="text" value="<%= member.userId %>" />
+            </td>
+            <!-- <td><%= member.userId %></td> -->
           </tr>
           <tr>
             <th>계정</th>
@@ -86,18 +89,20 @@
             <td><%= member.userCreatedAt %></td>
           </tr>
         </table>
-        <button class="wrapper" onclick="updateUser()">수정완료</button>
+        <button id="checkBox" class="wrapper" onclick="updateUser()">
+          수정완료
+        </button>
       </form>
     </div>
-    <!-- <button id="wrapper" id="join">수정완료</button> -->
   </body>
   <script>
-    // const form = document.querySelector("#join");s
-    // console.log(document.forms.form);
-    // console.log(new FormData(document.forms.form));
-    // console.log(form.member.userNickname);
-    console.log($("#userNickname").val());
-    // form.addEventListener("click", updateUser(10));
+    document.querySelector("#checkBox").addEventListener(
+      "click",
+      function (event) {
+        event.preventDefault();
+      },
+      false
+    );
 
     function updateUser() {
       const adminValid = $("#adminValid").val();
@@ -105,12 +110,14 @@
       const userPassword = $("#userPassword").val();
       const userEmail = $("#userEmail").val();
       const userPhoneNumber = $("#userPhoneNumber").val();
-      console.log("ㅇㅇ");
-      console.log(window.location);
-      debugger;
+      const userId = $("#test12").val();
+      console.log(userId);
+      // console.log(window.location);
+      // debugger;
       $.ajax({
         type: "patch",
-        url: `/api/admin/home/member/edit/${id}`,
+        url: "/api/admin/home/member/edit/" + userId,
+        // url: `/api/admin/home/member/edit/${id}`,
         // contentType: "application/json",
         data: {
           adminValid: adminValid,
@@ -121,10 +128,7 @@
         },
         success: function (response) {
           console.log(response.message);
-          // window.location.href = "/api/admin/home/member/";
-        },
-        error: function (response) {
-          console.error(error);
+          window.location.href = "/api/admin/home/member/";
         },
       });
     }

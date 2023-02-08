@@ -3,7 +3,7 @@ const router = express.Router();
 //잘못된 url 들어올 때 예외처리 필요
 
 const testRouter = require("./test.routes.js");
-const adminRouter = require("./admin.js");
+const adminRouter = require("./admin.routes.js");
 const ajaxRouter = require("./ajaxtest.routes.js");
 const signinRouter = require("./sign-in.js");
 const signupRouter = require("./sign-up.js");
